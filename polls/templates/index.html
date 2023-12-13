@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Polls{% endblock %}
+{% block header %}
+    <a href="{% url 'polls:create_question' %}" class="btn btn-primary">Create Poll</a>
+{% endblock %}
+{% block content %}
+{% if latest_question_list %}
+    <ul class="list-group mb-3">
+        {% for question in latest_question_list %}
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <a href="{% url 'polls:detail' question.id %}" class="d-block">{{ question.question_text }}</a>
+                <span class="badge badge-primary badge-pill">{{ question.choice_set.count }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p class="text-muted">No polls are available.</p>
+{% endif %}
+{% endblock %}

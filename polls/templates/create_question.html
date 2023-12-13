@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Results{% endblock %}
+
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<form method="post" action="{% url 'polls:create_question' %}" class="card mb-3">
+    {% csrf_token %}
+    <div class="card-header">
+      <h4 class="card-title mb-0">Create a new poll</h4>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <label for="question_text">Question:</label>
+            <textarea class="form-control" id="question_text" name="question_text" rows="3" placeholder="Enter your question here"></textarea>
+          </div>
+      <div id="choices-container">
+        <div class="form-group">
+            <label for="choice1">Choice 1:</label>
+            <input type="text" class="form-control" id="choice1" name="choice" placeholder="Enter choice 1">
+        </div>
+      
+        <div class="form-group">
+          <label for="choice2">Choice 2:</label>
+          <input type="text" class="form-control" id="choice2" name="choice" placeholder="Enter choice 2">
+        </div>
+        <div class="form-group">
+            <label for="choice2">Choice 3:</label>
+            <input type="text" class="form-control" id="choice2" name="choice" placeholder="Enter choice 3">
+          </div>
+      </div>
+      <button type="button" id="addChoice" class="btn btn-sm btn-outline-primary">Add choice</button>
+    </div>
+    <div class="card-footer text-right">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+<script>
+    $(document).ready(function() {
+        var choiceCount = 3;
+        $("#addChoice").click(function() {
+            choiceCount++;
+            $("#choices-container").append(
+                `<div class="form-group">
+            <label for="choice2">Choice ${choiceCount}:</label>
+            <input type="text" class="form-control" id="choice${choiceCount}" name="choice" placeholder="Enter choice ${choiceCount}">
+          </div>`
+            );
+        });
+    });
+</script>
+{% endblock %}

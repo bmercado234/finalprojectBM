@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Qustion - {{ question.question_text }}{% endblock %}
+
+{% block content %}
+<form action="{% url 'polls:vote' question.id %}" method="post" class="card mb-3">
+    {% csrf_token %}
+    <div class="card-header">
+      <h4 class="card-title mb-0">{{ question.question_text }}</h4>
+    </div>
+    <div class="card-body">
+      {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+          <strong>{{ error_message }}</strong>
+        </div>
+      {% endif %}
+      <ul class="list-group list-group-flush">
+        {% for choice in question.choice_set.all %}
+          <li class="list-group-item">
+            <div class="custom-control custom-radio">
+              <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" class="custom-control-input">
+              <label class="custom-control-label" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="card-footer text-right">
+      <button type="submit" class="btn btn-primary">Vote</button>
+    </div>
+  </form>
+  {% endblock %}

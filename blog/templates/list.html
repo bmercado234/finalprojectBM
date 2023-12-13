@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog List{% endblock %}
+
+{% block header %}
+    <a href="{% url 'blog:create_post' %}" class="btn btn-primary">Create Blog</a>
+{% endblock %}
+
+{% block content %}
+<h1>Blog Posts</h1>
+
+<div class="row">
+  {% for post in posts %}
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <p class="card-text">{{ post.content }}</p>
+          <p class="card-text">
+            <small class="text-muted">Posted by {{ post.author }} on {{ post.date_posted }}</small>
+          </p>
+          <a href="{% url 'blog:post_detail' post_id=post.id %}" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
